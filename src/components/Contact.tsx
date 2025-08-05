@@ -33,9 +33,9 @@ const Contact = () => {
             <Terminal className="h-8 w-8" />
             $ contact --init
           </h2>
-          <p className="text-lg text-green-300 max-w-2xl mx-auto font-mono">
-            Ready to collaborate? Let's connect and build something amazing together.
-          </p>
+                     <p className="text-lg text-green-300 max-w-2xl mx-auto font-mono">
+             Ready to collaborate? Let's connect and build something amazing together.
+           </p>
         </div>
         
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
@@ -89,28 +89,28 @@ const Contact = () => {
               <h3 className="text-xl font-semibold text-white mb-6 font-mono">
                 AVAILABILITY
               </h3>
-              <div className="space-y-2">
-                <p className="text-green-300 font-mono">
-                  <span className="text-green-500">{'>'}</span> Remote work opportunities
-                </p>
-                <p className="text-green-300 font-mono">
-                  <span className="text-green-500">{'>'}</span> Blockchain development projects
-                </p>
-                <p className="text-green-300 font-mono">
-                  <span className="text-green-500">{'>'}</span> Full-stack development
-                </p>
-                <p className="text-green-300 font-mono">
-                  <span className="text-green-500">{'>'}</span> Smart contract development
-                </p>
-              </div>
+                             <div className="space-y-2">
+                 <p className="text-green-300 font-mono">
+                   <span className="text-green-500">{'>'}</span> Remote work opportunities
+                 </p>
+                 <p className="text-green-300 font-mono">
+                   <span className="text-green-500">{'>'}</span> Frontend development projects
+                 </p>
+                 <p className="text-green-300 font-mono">
+                   <span className="text-green-500">{'>'}</span> Smart contract development
+                 </p>
+                 <p className="text-green-300 font-mono">
+                   <span className="text-green-500">{'>'}</span> AI/ML application development
+                 </p>
+               </div>
             </div>
           </div>
           
           {/* Contact Form */}
           <div className="terminal-bg rounded-lg p-6">
-            <h3 className="text-xl font-semibold text-green-400 mb-6 font-mono">
-              SEND_MESSAGE
-            </h3>
+                         <h3 className="text-xl font-semibold text-white mb-6 font-mono">
+               SEND_MESSAGE
+             </h3>
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>

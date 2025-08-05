@@ -133,22 +133,23 @@ const AudioStatusIndicator = ({
     );
   }
 
-  // Floating variant (default)
+  // Floating variant (default) - Mobile optimized
   return (
     <div className={cn(
-      'fixed bottom-28 right-6 z-50',
-      'max-w-xs transition-all duration-300',
+      'fixed bottom-20 right-4 z-50 sm:bottom-28 sm:right-6',
+      'max-w-[calc(100vw-2rem)] sm:max-w-xs',
+      'transition-all duration-300',
       'transform hover:scale-105',
       className
     )}>
       <div className={cn(
-        'flex items-center gap-3 p-4 rounded-lg border shadow-lg',
+        'flex items-center gap-3 p-3 sm:p-4 rounded-lg border shadow-lg',
         config.bgColor,
         config.borderColor,
         'backdrop-blur-sm bg-opacity-90'
       )}>
-        <div className="relative">
-          <IconComponent className={cn('w-5 h-5', config.iconColor, config.animation)} />
+        <div className="relative flex-shrink-0">
+          <IconComponent className={cn('w-4 h-4 sm:w-5 sm:h-5', config.iconColor, config.animation)} />
           {/* Enhanced status indicator */}
           {status === 'listening' && (
             <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-400 rounded-full animate-ping"></div>
@@ -160,18 +161,18 @@ const AudioStatusIndicator = ({
             <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
           )}
         </div>
-        <div className="flex-1">
-          <p className={cn('text-sm font-medium', config.textColor)}>
+        <div className="flex-1 min-w-0">
+          <p className={cn('text-xs sm:text-sm font-medium leading-tight', config.textColor)}>
             {config.message}
           </p>
           {/* Additional context for certain states */}
           {status === 'permission-denied' && (
-            <p className="text-xs text-orange-500 mt-1">
+            <p className="text-xs text-orange-500 mt-1 leading-tight">
               Click the microphone button to grant permission
             </p>
           )}
           {status === 'ready' && (
-            <p className="text-xs text-green-500 mt-1">
+            <p className="text-xs text-green-500 mt-1 leading-tight">
               Click to start voice conversation
             </p>
           )}

@@ -23,9 +23,9 @@ const Skills = () => {
             <Code className="h-8 w-8" />
             $ skills --list
           </h2>
-          <p className="text-lg text-green-300 max-w-2xl mx-auto font-mono">
-            Here are the technologies and tools I work with to build exceptional digital experiences.
-          </p>
+                     <p className="text-lg text-green-300 max-w-2xl mx-auto font-mono">
+             Here are the technologies and tools I work with to build exceptional digital experiences, from frontend development to blockchain applications and AI solutions.
+           </p>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">

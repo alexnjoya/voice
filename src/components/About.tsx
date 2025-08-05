@@ -20,53 +20,53 @@ const About = () => {
             
             <div className="grid md:grid-cols-2 gap-8 mt-12">
               <div className="terminal-bg rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4 text-white font-mono flex items-center gap-2">
-                  <Target className="h-5 w-5" />
-                  FOCUS_AREAS
-                </h3>
-                <ul className="text-green-300 space-y-2 text-left font-mono">
-                  <li className="flex items-center gap-2">
-                    <span className="text-green-500">{'>'}</span>
-                    Decentralized Finance (DeFi) Protocols
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-green-500">{'>'}</span>
-                    Smart Contract Development
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-green-500">{'>'}</span>
-                    Full-Stack Web Applications
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-green-500">{'>'}</span>
-                    Blockchain Integration
-                  </li>
-                </ul>
+                                 <h3 className="text-xl font-semibold mb-4 text-white font-mono flex items-center gap-2">
+                   <Target className="h-5 w-5" />
+                   FOCUS_AREAS
+                 </h3>
+                                   <ul className="text-green-300 space-y-2 text-left font-mono">
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-500">{'>'}</span>
+                      Large Language Models (LLMs)
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-500">{'>'}</span>
+                      Frontend Engineering & UI/UX
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-500">{'>'}</span>
+                      Smart Contract Development
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-500">{'>'}</span>
+                      AI/ML Application Development
+                    </li>
+                  </ul>
               </div>
               
               <div className="terminal-bg rounded-lg p-6">
-                <h3 className="text-xl font-semibold mb-4 text-white font-mono flex items-center gap-2">
-                  <Rocket className="h-5 w-5" />
-                  CURRENT_GOALS
-                </h3>
-                <ul className="text-green-300 space-y-2 text-left font-mono">
-                  <li className="flex items-center gap-2">
-                    <span className="text-green-500">{'>'}</span>
-                    Building innovative DeFi solutions
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-green-500">{'>'}</span>
-                    Contributing to Web3 ecosystem
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-green-500">{'>'}</span>
-                    Mentoring upcoming developers
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-green-500">{'>'}</span>
-                    Exploring AI integration in blockchain
-                  </li>
-                </ul>
+                                 <h3 className="text-xl font-semibold mb-4 text-white font-mono flex items-center gap-2">
+                   <Rocket className="h-5 w-5" />
+                   CURRENT_GOALS
+                 </h3>
+                                   <ul className="text-green-300 space-y-2 text-left font-mono">
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-500">{'>'}</span>
+                      Growing FineTun-ai as a leading AI platform
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-500">{'>'}</span>
+                      Building innovative blockchain applications
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-500">{'>'}</span>
+                      Contributing to the AI/ML ecosystem
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-500">{'>'}</span>
+                      Mentoring upcoming developers
+                    </li>
+                  </ul>
               </div>
             </div>
           </div>

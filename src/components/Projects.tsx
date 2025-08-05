@@ -10,9 +10,9 @@ const Projects = () => {
             <FolderOpen className="h-8 w-8" />
             $ ls projects/
           </h2>
-          <p className="text-lg text-green-300 max-w-2xl mx-auto font-mono">
-            Here are some of the projects I've built to showcase my skills and passion for development.
-          </p>
+                     <p className="text-lg text-green-300 max-w-2xl mx-auto font-mono">
+             Here are some of the projects I've built to showcase my skills and passion for development, from blockchain applications to AI solutions.
+           </p>
         </div>
         
         <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">

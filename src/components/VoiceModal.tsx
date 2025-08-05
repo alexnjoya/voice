@@ -147,41 +147,41 @@ const VoiceModal = ({ isOpen, onClose }: VoiceModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-hidden">
+      <DialogContent className="w-[calc(100vw-2rem)] sm:max-w-2xl max-h-[80vh] overflow-hidden">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-3 text-xl">
-            <div className="p-2 bg-gradient-to-r from-primary to-accent rounded-xl">
-              <Bot className="h-6 w-6 text-white" />
+          <DialogTitle className="flex items-center gap-2 sm:gap-3 text-lg sm:text-xl">
+            <div className="p-1.5 sm:p-2 bg-gradient-to-r from-primary to-accent rounded-xl">
+              <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
             </div>
-            AI Assistant for Alex Njoya
+            <span className="text-sm sm:text-base">AI Assistant for Alex Njoya</span>
           </DialogTitle>
         </DialogHeader>
         
         <div className="flex flex-col h-full">
           {/* Conversation Area */}
-          <div className="flex-1 bg-gray-900 rounded-lg p-4 mb-4 overflow-y-auto max-h-96">
+          <div className="flex-1 bg-gray-900 rounded-lg p-3 sm:p-4 mb-4 overflow-y-auto max-h-64 sm:max-h-96">
             {isInitializing ? (
-              <div className="text-center py-8">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-                <p className="text-green-400 font-mono">Initializing AI Assistant...</p>
-                <p className="text-gray-400 text-sm mt-2">Loading conversation engine</p>
+              <div className="text-center py-6 sm:py-8">
+                <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-primary mx-auto mb-3 sm:mb-4"></div>
+                <p className="text-green-400 font-mono text-sm sm:text-base">Initializing AI Assistant...</p>
+                <p className="text-gray-400 text-xs sm:text-sm mt-2">Loading conversation engine</p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {conversationHistory.map((message, index) => (
-                  <div key={index} className="text-sm">
-                    <span className="text-green-400 font-mono whitespace-pre-wrap">
+                  <div key={index} className="text-xs sm:text-sm">
+                    <span className="text-green-400 font-mono whitespace-pre-wrap leading-relaxed">
                       {formatMessage(message)}
                     </span>
                   </div>
                 ))}
                 {isProcessing && (
-                  <div className="text-sm">
+                  <div className="text-xs sm:text-sm">
                     <span className="text-green-400 font-mono">🤖 AI: Processing...</span>
                   </div>
                 )}
                 {transcribedText && (
-                  <div className="text-sm">
+                  <div className="text-xs sm:text-sm">
                     <span className="text-blue-400 font-mono">🎤 Transcribed: {transcribedText}</span>
                   </div>
                 )}
@@ -190,16 +190,16 @@ const VoiceModal = ({ isOpen, onClose }: VoiceModalProps) => {
           </div>
 
           {/* Quick Questions */}
-          <div className="mb-4">
-            <p className="text-sm text-muted-foreground mb-2">Quick questions:</p>
-            <div className="flex flex-wrap gap-2">
+          <div className="mb-3 sm:mb-4">
+            <p className="text-xs sm:text-sm text-muted-foreground mb-2">Quick questions:</p>
+            <div className="flex flex-wrap gap-1 sm:gap-2">
               {voiceAI.getQuickQuestions().map((question, index) => (
                 <Button
                   key={index}
                   variant="outline"
                   size="sm"
                   onClick={() => handleQuickQuestion(question)}
-                  className="text-xs"
+                  className="text-xs px-2 py-1 h-auto"
                   disabled={isProcessing}
                 >
                   {question}
@@ -209,9 +209,9 @@ const VoiceModal = ({ isOpen, onClose }: VoiceModalProps) => {
           </div>
 
           {/* Voice Control Section */}
-          <div className="border-t pt-4">
+          <div className="border-t pt-3 sm:pt-4">
             <div className="text-center">
-              <div className="mb-4">
+              <div className="mb-3 sm:mb-4">
                 <ModernAudioIcon
                   isListening={isListening}
                   isSpeaking={false}
@@ -224,11 +224,11 @@ const VoiceModal = ({ isOpen, onClose }: VoiceModalProps) => {
                 />
               </div>
               
-              <h3 className="text-lg font-semibold mb-2">
+              <h3 className="text-base sm:text-lg font-semibold mb-2">
                 {isListening ? 'Listening...' : hasPermission ? 'Ready for Voice Input' : 'Microphone Access Required'}
               </h3>
               
-              <p className="text-sm text-muted-foreground mb-4">
+              <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
                 {isListening 
                   ? 'Speak naturally, I\'m processing your request'
                   : hasPermission 
