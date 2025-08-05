@@ -6,7 +6,7 @@ const Projects = () => {
     <section id="projects" className="section-padding bg-black">
       <div className="max-w-7xl mx-auto container-padding">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-green-400 font-mono flex items-center justify-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-white font-mono flex items-center justify-center gap-3">
             <FolderOpen className="h-8 w-8" />
             $ ls projects/
           </h2>
@@ -22,7 +22,7 @@ const Projects = () => {
               className="terminal-bg rounded-lg p-6 font-mono hover:border-green-400 transition-colors"
             >
               <div className="flex items-start justify-between mb-4">
-                <h3 className="text-xl font-semibold text-green-400 mb-2">
+                <h3 className="text-xl font-semibold text-white mb-2">
                   {project.title}
                 </h3>
                 <div className="flex gap-2">

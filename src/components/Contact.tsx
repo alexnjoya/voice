@@ -29,7 +29,7 @@ const Contact = () => {
     <section id="contact" className="section-padding bg-black">
       <div className="max-w-7xl mx-auto container-padding">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-green-400 font-mono flex items-center justify-center gap-3">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-white font-mono flex items-center justify-center gap-3">
             <Terminal className="h-8 w-8" />
             $ contact --init
           </h2>
@@ -42,7 +42,7 @@ const Contact = () => {
           {/* Contact Information */}
           <div className="space-y-8">
             <div className="terminal-bg rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-green-400 mb-6 font-mono">
+              <h3 className="text-xl font-semibold text-white mb-6 font-mono">
                 CONTACT_INFO
               </h3>
               
@@ -86,7 +86,7 @@ const Contact = () => {
             </div>
             
             <div className="terminal-bg rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-green-400 mb-6 font-mono">
+              <h3 className="text-xl font-semibold text-white mb-6 font-mono">
                 AVAILABILITY
               </h3>
               <div className="space-y-2">
