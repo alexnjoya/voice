@@ -52,7 +52,7 @@ const Navbar = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="text-green-400 hover:text-green-300 transition-colors duration-200 font-mono text-sm"
+                className="text-white hover:text-gray-300 transition-colors duration-200 font-mono text-sm"
               >
                 ./{item.name.toLowerCase()}
               </button>
@@ -98,7 +98,7 @@ const Navbar = () => {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="block w-full text-left px-3 py-2 text-green-400 hover:text-green-300 transition-colors duration-200 font-mono text-sm"
+                  className="block w-full text-left px-3 py-2 text-white hover:text-gray-300 transition-colors duration-200 font-mono text-sm"
                 >
                   ./{item.name.toLowerCase()}
                 </button>
