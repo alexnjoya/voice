@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Mic, ArrowDown, Terminal, Sparkles, Bot } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { portfolioData } from '@/data/portfolio';
@@ -20,8 +20,8 @@ const Hero = () => {
     "How can I contact him?"
   ];
 
-  // Terminal animation sequence
-  const terminalLines = [
+  // Terminal animation sequence - moved to useMemo to fix dependency warning
+  const terminalLines = useMemo(() => [
     'Initializing AI Assistant...',
     'Voice recognition system loaded',
     'Personal data synchronized',
@@ -32,7 +32,7 @@ const Hero = () => {
     `I can help you learn about Alex's blockchain & full-stack expertise`,
     `Click any option below or use the voice button to start:`,
     `Ready to assist you!`
-  ];
+  ], []);
 
   useEffect(() => {
     // Start terminal animation after a short delay

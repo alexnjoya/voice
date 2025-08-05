@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
-import { Mic, MicOff, Volume2, X } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { voiceAI, ConversationMessage } from '@/services/voiceAI';
 import { voiceRecognition } from '@/services/voiceRecognition';
+import ModernAudioIcon from './ModernAudioIcon';
+import AudioStatusIndicator from './AudioStatusIndicator';
 
 interface VoiceInteractionProps {
   isOpen: boolean;
@@ -18,6 +20,30 @@ const VoiceInteraction = ({ isOpen, onClose }: VoiceInteractionProps) => {
   const [transcribedText, setTranscribedText] = useState('');
   const [welcomeMessage, setWelcomeMessage] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
+
+  const requestMicrophonePermission = useCallback(async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      setHasPermission(true);
+      stream.getTracks().forEach(track => track.stop()); // Stop the stream after getting permission
+      
+             // Start initial conversation
+       const initialMessages: ConversationMessage[] = [
+         { type: 'ai', content: "👋 Hello! I'm your AI assistant for Alex Njoya.", timestamp: new Date() },
+         { type: 'ai', content: "I can help you learn about Alex's background, experience, and projects.", timestamp: new Date() },
+         { type: 'ai', content: "Try asking: 'Tell me about Alex', 'What's his experience?', or 'What are his skills?'", timestamp: new Date() }
+       ];
+       setConversationHistory(initialMessages);
+       
+       // Speak the welcome message
+       setTimeout(() => {
+         speakText("Hello! I'm your AI assistant for Alex Njoya. I can help you learn about Alex's background, experience, and projects. Try asking me about Alex, his experience, or his skills.");
+       }, 1000);
+    } catch (error) {
+      console.error('Microphone permission denied:', error);
+      setHasPermission(false);
+    }
+  }, []);
 
   // Initialize when component opens
   useEffect(() => {
@@ -50,31 +76,7 @@ const VoiceInteraction = ({ isOpen, onClose }: VoiceInteractionProps) => {
 
       return () => clearInterval(interval);
     }
-  }, [isOpen]);
-
-  const requestMicrophonePermission = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      setHasPermission(true);
-      stream.getTracks().forEach(track => track.stop()); // Stop the stream after getting permission
-      
-             // Start initial conversation
-       const initialMessages: ConversationMessage[] = [
-         { type: 'ai', content: "👋 Hello! I'm your AI assistant for Alex Njoya.", timestamp: new Date() },
-         { type: 'ai', content: "I can help you learn about Alex's background, experience, and projects.", timestamp: new Date() },
-         { type: 'ai', content: "Try asking: 'Tell me about Alex', 'What's his experience?', or 'What are his skills?'", timestamp: new Date() }
-       ];
-       setConversationHistory(initialMessages);
-       
-       // Speak the welcome message
-       setTimeout(() => {
-         speakText("Hello! I'm your AI assistant for Alex Njoya. I can help you learn about Alex's background, experience, and projects. Try asking me about Alex, his experience, or his skills.");
-       }, 1000);
-    } catch (error) {
-      console.error('Microphone permission denied:', error);
-      setHasPermission(false);
-    }
-  };
+  }, [isOpen, requestMicrophonePermission]);
 
   const speakText = (text: string) => {
     if ('speechSynthesis' in window) {
@@ -269,29 +271,46 @@ const VoiceInteraction = ({ isOpen, onClose }: VoiceInteractionProps) => {
 
         {/* Action Button */}
         <div className="p-6 border-t border-border">
-                     <Button
-             onClick={toggleListening}
-             disabled={isProcessing || isInitializing || isSpeaking}
-             className={`w-full h-12 rounded-full ${
-               isListening
-                 ? 'bg-red-500 hover:bg-red-600'
-                 : 'bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary'
-             } text-white transition-all duration-300`}
-           >
-            <div className="flex items-center gap-3">
-              {isListening ? (
-                <>
-                  <MicOff className="h-5 w-5" />
-                  <span>Stop Listening</span>
-                </>
-              ) : (
-                <>
-                  <Mic className="h-5 w-5" />
-                  <span>Start Listening</span>
-                </>
-              )}
-            </div>
-          </Button>
+          <div className="flex justify-center">
+            <ModernAudioIcon
+              isListening={isListening}
+              isSpeaking={isSpeaking}
+              isProcessing={isProcessing}
+              isInitializing={isInitializing}
+              hasPermission={hasPermission}
+              onClick={toggleListening}
+              size="md"
+              variant="inline"
+            />
+          </div>
+          
+          {/* Status indicator */}
+          <div className="mt-4">
+            {hasPermission === false && (
+              <AudioStatusIndicator
+                status="permission-denied"
+                variant="inline"
+              />
+            )}
+            {isProcessing && (
+              <AudioStatusIndicator
+                status="processing"
+                variant="inline"
+              />
+            )}
+            {isSpeaking && (
+              <AudioStatusIndicator
+                status="speaking"
+                variant="inline"
+              />
+            )}
+            {isListening && (
+              <AudioStatusIndicator
+                status="listening"
+                variant="inline"
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

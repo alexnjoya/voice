@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { X, Mic, MicOff, Volume2, Settings, Sparkles, Bot, MessageCircle, Brain, Zap } from 'lucide-react';
+import { X, Settings, Sparkles, Bot, MessageCircle, Brain, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { voiceAI, ConversationMessage } from '@/services/voiceAI';
 import { voiceRecognition } from '@/services/voiceRecognition';
+import ModernAudioIcon from './ModernAudioIcon';
+import AudioStatusIndicator from './AudioStatusIndicator';
 
 interface VoiceModalProps {
   isOpen: boolean;
@@ -209,26 +211,17 @@ const VoiceModal = ({ isOpen, onClose }: VoiceModalProps) => {
           {/* Voice Control Section */}
           <div className="border-t pt-4">
             <div className="text-center">
-              <div className="relative inline-block mb-4">
-                <div 
-                  className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 ${
-                    isListening 
-                      ? 'bg-red-500 animate-pulse' 
-                      : hasPermission 
-                        ? 'bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary' 
-                        : 'bg-muted hover:bg-muted/80'
-                  }`}
-                >
-                  {isListening ? (
-                    <MicOff className="h-8 w-8 text-white" />
-                  ) : (
-                    <Mic className={`h-8 w-8 ${hasPermission ? 'text-white' : 'text-muted-foreground'}`} />
-                  )}
-                </div>
-                
-                {isListening && (
-                  <div className="absolute inset-0 rounded-full border-4 border-red-500 animate-ping"></div>
-                )}
+              <div className="mb-4">
+                <ModernAudioIcon
+                  isListening={isListening}
+                  isSpeaking={false}
+                  isProcessing={isProcessing}
+                  isInitializing={false}
+                  hasPermission={hasPermission}
+                  onClick={toggleListening}
+                  size="lg"
+                  variant="inline"
+                />
               </div>
               
               <h3 className="text-lg font-semibold mb-2">
@@ -244,27 +237,27 @@ const VoiceModal = ({ isOpen, onClose }: VoiceModalProps) => {
                 }
               </p>
 
-              <Button
-                onClick={toggleListening}
-                disabled={isProcessing}
-                className={`px-8 py-3 text-base font-medium rounded-xl transition-all duration-300 ${
-                  isListening 
-                    ? 'bg-red-500 hover:bg-red-600 text-white' 
-                    : 'bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white'
-                }`}
-              >
-                {isListening ? (
-                  <>
-                    <MicOff className="mr-2 h-5 w-5" />
-                    Stop Listening
-                  </>
-                ) : (
-                  <>
-                    <Mic className="mr-2 h-5 w-5" />
-                    {hasPermission ? 'Start Voice Chat' : 'Enable Microphone'}
-                  </>
+              {/* Status indicator */}
+              <div className="mb-4">
+                {hasPermission === false && (
+                  <AudioStatusIndicator
+                    status="permission-denied"
+                    variant="minimal"
+                  />
                 )}
-              </Button>
+                {isProcessing && (
+                  <AudioStatusIndicator
+                    status="processing"
+                    variant="minimal"
+                  />
+                )}
+                {isListening && (
+                  <AudioStatusIndicator
+                    status="listening"
+                    variant="minimal"
+                  />
+                )}
+              </div>
             </div>
           </div>
 
