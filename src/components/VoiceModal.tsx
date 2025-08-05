@@ -42,51 +42,51 @@ const VoiceModal = ({ isOpen, onClose }: VoiceModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-sm">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-3 text-xl">
+          <DialogTitle className="flex items-center gap-3 text-lg">
             <div className="p-2 bg-primary/10 rounded-xl">
-              <Mic className="h-6 w-6 text-primary" />
+              <Mic className="h-5 w-5 text-primary" />
             </div>
             Voice Conversation
           </DialogTitle>
         </DialogHeader>
         
-        <div className="space-y-6">
+        <div className="space-y-4">
           {/* Status Section */}
-          <div className="text-center py-6">
+          <div className="text-center py-4">
             <div className="relative inline-block">
               <div 
-                className={`w-20 h-20 rounded-full flex items-center justify-center transition-all duration-300 ${
+                className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${
                   isListening 
-                    ? 'bg-red-500 animate-pulse-glow' 
+                    ? 'bg-red-500' 
                     : hasPermission 
-                      ? 'bg-primary hover:bg-primary-hover animate-pulse-glow' 
+                      ? 'bg-primary hover:bg-primary-hover' 
                       : 'bg-muted hover:bg-muted/80'
                 }`}
               >
                 {isListening ? (
-                  <MicOff className="h-8 w-8 text-white" />
+                  <MicOff className="h-6 w-6 text-white" />
                 ) : (
-                  <Mic className={`h-8 w-8 ${hasPermission ? 'text-white' : 'text-muted-foreground'}`} />
+                  <Mic className={`h-6 w-6 ${hasPermission ? 'text-white' : 'text-muted-foreground'}`} />
                 )}
               </div>
               
               {isListening && (
-                <div className="absolute inset-0 rounded-full border-4 border-red-500 animate-ping"></div>
+                <div className="absolute inset-0 rounded-full border-2 border-red-500 animate-ping"></div>
               )}
             </div>
             
-            <h3 className="text-lg font-semibold mt-4 text-foreground">
+            <h3 className="text-base font-semibold mt-3 text-foreground">
               {isListening ? 'Listening...' : hasPermission ? 'Ready to Talk' : 'Microphone Access Required'}
             </h3>
             
             <p className="text-sm text-muted-foreground mt-2">
               {isListening 
-                ? 'Speak naturally, I\'m listening to your questions'
+                ? 'Speak naturally, I\'m listening'
                 : hasPermission 
-                  ? 'Click the microphone to start our conversation'
-                  : 'Please allow microphone access to enable voice chat'
+                  ? 'Click to start conversation'
+                  : 'Allow microphone access to begin'
               }
             </p>
           </div>
@@ -94,7 +94,7 @@ const VoiceModal = ({ isOpen, onClose }: VoiceModalProps) => {
           {/* Action Button */}
           <Button
             onClick={toggleListening}
-            className={`w-full py-4 text-lg font-medium rounded-xl transition-all duration-300 ${
+            className={`w-full py-3 text-base font-medium rounded-xl transition-all duration-300 ${
               isListening 
                 ? 'bg-red-500 hover:bg-red-600 text-white' 
                 : 'bg-primary hover:bg-primary-hover text-primary-foreground'
@@ -102,37 +102,21 @@ const VoiceModal = ({ isOpen, onClose }: VoiceModalProps) => {
           >
             {isListening ? (
               <>
-                <MicOff className="mr-3 h-5 w-5" />
-                Stop Conversation
+                <MicOff className="mr-2 h-4 w-4" />
+                Stop
               </>
             ) : (
               <>
-                <Mic className="mr-3 h-5 w-5" />
+                <Mic className="mr-2 h-4 w-4" />
                 {hasPermission ? 'Start Voice Chat' : 'Enable Microphone'}
               </>
             )}
           </Button>
 
-          {/* Features */}
-          <div className="space-y-3">
-            <h4 className="font-medium text-foreground text-sm">Features:</h4>
-            {features.map((feature, index) => (
-              <div key={index} className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                <div className="p-1.5 bg-primary/10 rounded-lg">
-                  <feature.icon className="h-4 w-4 text-primary" />
-                </div>
-                <div>
-                  <h5 className="font-medium text-sm text-foreground">{feature.title}</h5>
-                  <p className="text-xs text-muted-foreground">{feature.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Footer */}
-          <div className="text-center pt-4 border-t border-border">
+          {/* Compact Footer */}
+          <div className="text-center pt-2">
             <p className="text-xs text-muted-foreground">
-              Voice conversations are processed securely and are not stored permanently.
+              AI-powered voice conversations • Secure & private
             </p>
           </div>
         </div>
