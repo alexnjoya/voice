@@ -28,17 +28,6 @@ const ModernAudioIcon = ({
 }: ModernAudioIconProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
-  const [pulseCount, setPulseCount] = useState(0);
-
-  // Enhanced pulse animation for listening state
-  useEffect(() => {
-    if (isListening) {
-      const interval = setInterval(() => {
-        setPulseCount(prev => (prev + 1) % 3);
-      }, 600);
-      return () => clearInterval(interval);
-    }
-  }, [isListening]);
 
   const sizeClasses = {
     sm: 'w-12 h-12',
@@ -129,16 +118,8 @@ const ModernAudioIcon = ({
       return (
         <div className="relative flex items-center justify-center">
           <MicOff className={cn(iconSizes[size], 'text-white')} />
-          {/* Enhanced pulse rings */}
-          <div className="absolute inset-0 rounded-full border-2 border-white/40 animate-ping"></div>
-          <div 
-            className="absolute inset-0 rounded-full border-2 border-white/30 animate-ping" 
-            style={{ animationDelay: `${pulseCount * 0.2}s` }}
-          ></div>
-          <div 
-            className="absolute inset-0 rounded-full border-2 border-white/20 animate-ping" 
-            style={{ animationDelay: `${pulseCount * 0.4}s` }}
-          ></div>
+          {/* Single smooth pulse ring */}
+          <div className="absolute inset-0 rounded-full border-2 border-white/30 animate-ping"></div>
         </div>
       );
     }
@@ -147,16 +128,8 @@ const ModernAudioIcon = ({
       return (
         <div className="relative flex items-center justify-center">
           <Volume2 className={cn(iconSizes[size], 'text-white animate-pulse')} />
-          {/* Sound wave animation */}
+          {/* Single smooth pulse ring */}
           <div className="absolute inset-0 rounded-full border-2 border-blue-300 animate-ping"></div>
-          <div 
-            className="absolute inset-2 rounded-full border-2 border-blue-200 animate-ping" 
-            style={{ animationDelay: '0.2s' }}
-          ></div>
-          <div 
-            className="absolute inset-4 rounded-full border-2 border-blue-100 animate-ping" 
-            style={{ animationDelay: '0.4s' }}
-          ></div>
         </div>
       );
     }

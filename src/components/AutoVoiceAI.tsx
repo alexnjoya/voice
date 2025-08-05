@@ -13,60 +13,47 @@ const AutoVoiceAI = () => {
   const [transcribedText, setTranscribedText] = useState('');
   const [welcomeMessage, setWelcomeMessage] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [showConversation, setShowConversation] = useState(false);
   const [hasSpokenIntro, setHasSpokenIntro] = useState(false);
-  const [initializationStep, setInitializationStep] = useState(0);
-  const [speechEnabled, setSpeechEnabled] = useState(true);
+  const [permissionError, setPermissionError] = useState<string | null>(null);
 
-  // Speech synthesis setup
-  const speakText = useCallback((text: string) => {
-    if (!speechEnabled || !('speechSynthesis' in window)) return;
-    
-    try {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 0.85;
-      utterance.pitch = 0.95;
-      utterance.volume = 1;
-      utterance.lang = 'en-US';
-      
-      // Get available voices and set a more human-like one
-      const voices = speechSynthesis.getVoices();
-      const preferredVoice = voices.find(voice => 
-        voice.name.includes('Google') || 
-        voice.name.includes('Microsoft') ||
-        voice.name.includes('Alex') ||
-        voice.name.includes('David') ||
-        voice.name.includes('Sarah') ||
-        voice.name.includes('Emma')
-      );
-      if (preferredVoice) {
-        utterance.voice = preferredVoice;
-      }
-      
-      setIsSpeaking(true);
-      utterance.onend = () => setIsSpeaking(false);
-      utterance.onerror = () => setIsSpeaking(false);
-      
-      speechSynthesis.speak(utterance);
-    } catch (error) {
-      console.error('Speech synthesis error:', error);
-      setIsSpeaking(false);
-    }
-  }, [speechEnabled]);
+  // Reset intro speech state on component mount (page refresh)
+  useEffect(() => {
+    setHasSpokenIntro(false);
+  }, []);
 
+  // Auto-initialize when component mounts
   const requestMicrophonePermission = useCallback(async () => {
     try {
-      setWelcomeMessage("🎤 Requesting microphone permission...");
+      // Check if speech recognition is supported
+      if (!voiceRecognition.isSupported()) {
+        console.error('Speech recognition not supported in this browser');
+        setHasPermission(false);
+        setPermissionError('Speech recognition not supported in this browser');
+        return;
+      }
+
+      // Check if we're in a secure context (HTTPS or localhost)
+      if (!window.isSecureContext) {
+        console.error('Microphone access requires a secure context (HTTPS)');
+        setHasPermission(false);
+        setPermissionError('Microphone access requires a secure context (HTTPS)');
+        return;
+      }
+
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       setHasPermission(true);
-      stream.getTracks().forEach(track => track.stop());
+      setPermissionError(null);
+      stream.getTracks().forEach(track => track.stop()); // Stop the stream after getting permission
       
       // Start initial conversation
       const initialMessages: ConversationMessage[] = [
-        { type: 'ai', content: "👋 Hello! I'm your AI assistant for Alex Njoya.", timestamp: new Date() },
+        { type: 'ai', content: "Hello! I'm your AI assistant for Alex Njoya.", timestamp: new Date() },
         { type: 'ai', content: "I can help you learn about Alex's background, experience, and projects.", timestamp: new Date() },
         { type: 'ai', content: "Try asking: 'Tell me about Alex', 'What's his experience?', or 'What are his skills?'", timestamp: new Date() }
       ];
       setConversationHistory(initialMessages);
+      setShowConversation(true);
       
       // Speak the welcome message only once
       if (!hasSpokenIntro) {
@@ -75,42 +62,52 @@ const AutoVoiceAI = () => {
           console.log('🎤 Speaking welcome message:', welcomeText);
           speakText(welcomeText);
           setHasSpokenIntro(true);
-        }, 1000);
+        }, 1500); // Slightly longer delay to ensure everything is ready
       }
     } catch (error: any) {
       console.error('Microphone permission denied:', error);
       setHasPermission(false);
-      setWelcomeMessage("❌ Microphone access denied. Please allow microphone access to use voice features.");
+      
+      // Provide specific error messages based on the error type
+      if (error.name === 'NotAllowedError') {
+        setPermissionError('Microphone access denied. Please allow microphone access in your browser settings.');
+      } else if (error.name === 'NotFoundError') {
+        setPermissionError('No microphone found. Please connect a microphone and try again.');
+      } else if (error.name === 'NotReadableError') {
+        setPermissionError('Microphone is already in use by another application.');
+      } else {
+        setPermissionError('Unable to access microphone. Please check your browser settings.');
+      }
     }
-  }, [hasSpokenIntro, speakText]);
+  }, [hasSpokenIntro]);
 
-  // Initialize when component mounts
   useEffect(() => {
     const initializeVoiceAI = async () => {
       setIsInitializing(true);
       voiceAI.clearHistory();
       
-      // Enhanced initialization sequence
-      const initSequence = [
-        "🎤 Initializing AI voice assistant...",
-        "🔊 Loading speech recognition engine...",
-        "🎯 Setting up conversation AI...",
-        "📡 Requesting microphone access...",
-        "✅ AI assistant ready!"
+      // Welcome message sequence
+      const welcomeSequence = [
+        "Initializing voice assistant...",
+        "Requesting microphone permission...",
+        "Permission granted!",
+        "Hello! I'm your AI assistant for Alex Njoya.",
+        "I can help you learn about Alex's background, experience, and projects.",
+        "Try asking: 'Tell me about Alex', 'What's his experience?', or 'What are his skills?'",
+        "Ready to assist you!"
       ];
 
-      let currentStep = 0;
+      let currentIndex = 0;
       const interval = setInterval(() => {
-        if (currentStep < initSequence.length) {
-          setWelcomeMessage(initSequence[currentStep]);
-          setInitializationStep(currentStep);
-          currentStep++;
+        if (currentIndex < welcomeSequence.length) {
+          setWelcomeMessage(welcomeSequence[currentIndex]);
+          currentIndex++;
         } else {
           clearInterval(interval);
           setIsInitializing(false);
           requestMicrophonePermission();
         }
-      }, 800);
+      }, 1000);
 
       return () => clearInterval(interval);
     };
@@ -118,10 +115,69 @@ const AutoVoiceAI = () => {
     // Start initialization after a short delay
     const timer = setTimeout(() => {
       initializeVoiceAI();
-    }, 1500); // 1.5 second delay to let page load
+    }, 2000); // 2 second delay to let page load
 
     return () => clearTimeout(timer);
   }, [requestMicrophonePermission]);
+
+  const speakText = (text: string) => {
+    if ('speechSynthesis' in window && speechSynthesis) {
+      try {
+        console.log('🎤 Attempting to speak:', text);
+        setIsSpeaking(true);
+        
+        // Cancel any ongoing speech
+        speechSynthesis.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        utterance.volume = 0.8;
+        utterance.lang = 'en-US';
+        
+        // Get available voices and try to use a good one
+        const voices = speechSynthesis.getVoices();
+        if (voices.length > 0) {
+          // Try to find a good voice
+          const preferredVoice = voices.find(voice => 
+            voice.name.includes('Google') || 
+            voice.name.includes('Microsoft') ||
+            voice.name.includes('Alex') ||
+            voice.name.includes('David')
+          );
+          if (preferredVoice) {
+            utterance.voice = preferredVoice;
+          }
+        }
+        
+        utterance.onstart = () => {
+          console.log('🎤 Speech started');
+        };
+        
+        utterance.onend = () => {
+          console.log('🎤 Speech ended');
+          setIsSpeaking(false);
+        };
+        
+        utterance.onerror = (event) => {
+          console.error('🎤 Speech error:', event);
+          setIsSpeaking(false);
+        };
+        
+        // Ensure speech synthesis is not paused
+        if (speechSynthesis.paused) {
+          speechSynthesis.resume();
+        }
+        
+        speechSynthesis.speak(utterance);
+      } catch (error) {
+        console.error('🎤 Error in speakText:', error);
+        setIsSpeaking(false);
+      }
+    } else {
+      console.error('🎤 Speech synthesis not supported');
+    }
+  };
 
   const processUserInput = async (input: string) => {
     if (!input.trim()) return;
@@ -137,9 +193,6 @@ const AutoVoiceAI = () => {
       
       setConversationHistory(prev => [...prev, userMessage]);
       
-      // Add a small delay to show processing state
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
       const response = await voiceAI.processUserInput(input);
       
       const aiMessage: ConversationMessage = {
@@ -147,13 +200,11 @@ const AutoVoiceAI = () => {
         content: response,
         timestamp: new Date()
       };
-    
+      
       setConversationHistory(prev => [...prev, aiMessage]);
       
-      // Speak the response after a short delay
-      setTimeout(() => {
-        speakText(response);
-      }, 300);
+      // Speak the response
+      speakText(response);
       
     } catch (error) {
       console.error('Error processing user input:', error);
@@ -178,27 +229,29 @@ const AutoVoiceAI = () => {
 
   const toggleListening = async () => {
     if (!hasPermission) {
-      // Show initialization state when requesting permission
-      setIsInitializing(true);
       await requestMicrophonePermission();
       return;
     }
 
     if (!isListening) {
       try {
+        console.log('🎤 Starting voice recording...');
         setIsListening(true);
         setTranscribedText('');
         await voiceRecognition.startRecording(handleTranscriptionComplete);
         setTimeout(() => {
           if (isListening) {
+            console.log('🎤 Auto-stopping recording after 10 seconds');
             stopVoiceRecording();
           }
         }, 10000);
       } catch (error) {
         console.error('Error starting voice recording:', error);
         setIsListening(false);
+        setPermissionError('Failed to start voice recording. Please try again.');
       }
     } else {
+      console.log('🎤 Stopping voice recording...');
       stopVoiceRecording();
     }
   };
@@ -210,18 +263,10 @@ const AutoVoiceAI = () => {
     }
   };
 
-  const toggleSpeech = () => {
-    setSpeechEnabled(!speechEnabled);
-    if (speechEnabled) {
-      speechSynthesis.cancel();
-      setIsSpeaking(false);
-    }
-  };
-
   return (
-    <div className="fixed bottom-4 right-4 z-50">
-      {/* Voice AI Button */}
-      <div className="relative">
+    <>
+      {/* Modern Floating Voice AI Button */}
+      <div className="fixed bottom-4 right-4 z-50 sm:bottom-6 sm:right-6">
         <ModernAudioIcon
           isListening={isListening}
           isSpeaking={isSpeaking}
@@ -232,52 +277,57 @@ const AutoVoiceAI = () => {
           size="lg"
           variant="floating"
         />
-        
-        {/* Speech Toggle Button */}
-        <button
-          onClick={toggleSpeech}
-          className="absolute -top-2 -right-2 w-6 h-6 bg-gray-800 rounded-full flex items-center justify-center text-white text-xs hover:bg-gray-700 transition-colors"
-          title={speechEnabled ? "Disable speech" : "Enable speech"}
-        >
-          {speechEnabled ? "🔊" : "🔇"}
-        </button>
       </div>
 
-      {/* Status Indicator */}
-      <div className="mt-4">
-        {isSpeaking && (
-          <AudioStatusIndicator
-            status="speaking"
-            variant="floating"
-          />
-        )}
-        {isListening && !isSpeaking && (
-          <AudioStatusIndicator
-            status="listening"
-            variant="floating"
-          />
-        )}
-        {isProcessing && !isSpeaking && !isListening && (
-          <AudioStatusIndicator
-            status="processing"
-            variant="floating"
-          />
-        )}
-        {isInitializing && !isSpeaking && !isListening && !isProcessing && (
-          <AudioStatusIndicator
-            status="initializing"
-            message={welcomeMessage}
-            variant="floating"
-          />
-        )}
-        {hasPermission === false && !isSpeaking && !isListening && !isProcessing && !isInitializing && (
-          <AudioStatusIndicator
-            status="permission-denied"
-            variant="floating"
-          />
-        )}
-      </div>
-    </div>
+      {/* Enhanced Status Indicators with Mobile Optimization */}
+      {hasPermission === false && (
+        <AudioStatusIndicator
+          status="permission-denied"
+          message={permissionError || "Microphone permission denied. Please allow microphone access to use voice features."}
+          className="max-w-[calc(100vw-2rem)] sm:max-w-xs"
+        />
+      )}
+
+      {hasPermission && !isListening && !isProcessing && !isSpeaking && !isInitializing && (
+        <AudioStatusIndicator
+          status="ready"
+          message="Click to start voice conversation"
+          className="max-w-[calc(100vw-2rem)] sm:max-w-xs"
+        />
+      )}
+
+      {isSpeaking && (
+        <AudioStatusIndicator
+          status="speaking"
+          message="AI is speaking..."
+          className="max-w-[calc(100vw-2rem)] sm:max-w-xs"
+        />
+      )}
+
+      {isProcessing && (
+        <AudioStatusIndicator
+          status="processing"
+          message="Processing your request..."
+          className="max-w-[calc(100vw-2rem)] sm:max-w-xs"
+        />
+      )}
+
+      {isInitializing && (
+        <AudioStatusIndicator
+          status="initializing"
+          message="Initializing voice assistant..."
+          className="max-w-[calc(100vw-2rem)] sm:max-w-xs"
+        />
+      )}
+
+      {isListening && (
+        <AudioStatusIndicator
+          status="listening"
+          message="Listening... Click to stop"
+          className="max-w-[calc(100vw-2rem)] sm:max-w-xs"
+        />
+      )}
+    </>
   );
 };
 

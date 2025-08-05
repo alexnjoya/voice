@@ -8,6 +8,7 @@ const Hero = () => {
   const [terminalText, setTerminalText] = useState('');
   const [currentLine, setCurrentLine] = useState(0);
   const [showTerminal, setShowTerminal] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   // Terminal options for clicking
   const terminalOptions = [
@@ -58,52 +59,38 @@ const Hero = () => {
   }, [currentLine, showTerminal, terminalLines]);
 
   const handleTerminalOptionClick = (option: string) => {
-    // Simulate typing the option
-    setTerminalText(prev => prev + `\nUser: ${option}\n`);
-    
-    // Auto-scroll to bottom after adding text
-    setTimeout(() => {
-      const terminalElement = document.querySelector('.terminal-content');
-      if (terminalElement) {
-        terminalElement.scrollTop = terminalElement.scrollHeight;
-      }
-    }, 100);
-    
-    // Simulate AI response
-    setTimeout(() => {
-      let response = '';
-      switch (option) {
-        case "Tell me about Alex":
-          response = "Alex Njoya is a final-year Computer Science student at University of Ghana with strong experience in software development, frontend engineering, and AI application development. He's the Co-Founder of FineTun-ai, a platform enabling businesses to fine-tune Large Language Models (LLMs) using their proprietary datasets.";
-          break;
-        case "What's his AI experience?":
-          response = "Alex co-founded FineTun-ai in April 2025, leading the development of a no-code platform for LLM fine-tuning. He has experience as Frontend Developer at Next Code Systems, Volunteer Frontend Developer at Mowblox, and Blockchain Developer at MEST Africa.";
-          break;
-        case "What are his ML skills?":
-          response = "Alex's skills include JavaScript, TypeScript, Python, React.js, Next.js, Tailwind CSS, Solidity, Smart Contracts, Git, Agile methodologies, and AI/ML development with focus on Large Language Models.";
-          break;
-        case "Tell me about FineTun-ai":
-          response = "FineTun-ai is a startup co-founded by Alex in April 2025, focused on enabling businesses to fine-tune Large Language Models (LLMs) using their proprietary datasets. He spearheaded product vision and strategy in this fast-paced startup environment.";
-          break;
-        case "What AI projects has he built?":
-          response = "Alex has built FineTun-ai Platform (AI company), Crop Disease Prediction Platform (AI/ML), Remifi (Cross-platform Remittance), Tally (Blockchain Voting DApp), AdwumaPa (Blockchain Freelance Platform), and is developing an AI-Powered Voice Assistant - all innovative applications combining blockchain and AI technologies.";
-          break;
-        case "How can I contact him?":
-          response = "You can reach Alex at njoyaalexander71@gmail.com or +233 240 027 151. He's available for remote work and AI/ML development opportunities.";
-          break;
-        default:
-          response = "I'm here to help you learn about Alex Njoya!";
-      }
-      setTerminalText(prev => prev + `AI: ${response}\n`);
-      
-      // Auto-scroll to bottom after AI response
-      setTimeout(() => {
-        const terminalElement = document.querySelector('.terminal-content');
-        if (terminalElement) {
-          terminalElement.scrollTop = terminalElement.scrollHeight;
-        }
-      }, 100);
-    }, 1000);
+    setSelectedOption(option);
+         // Simulate typing the option
+     setTerminalText(prev => prev + `\nUser: ${option}\n`);
+     
+     // Simulate AI response
+     setTimeout(() => {
+       let response = '';
+       switch (option) {
+         case "Tell me about Alex":
+           response = "Alex Njoya is a final-year Computer Science student at University of Ghana with strong experience in software development, frontend engineering, and AI application development. He's the Co-Founder of FineTun-ai, a platform enabling businesses to fine-tune Large Language Models (LLMs) using their proprietary datasets.";
+           break;
+         case "What's his AI experience?":
+           response = "Alex co-founded FineTun-ai in April 2025, leading the development of a no-code platform for LLM fine-tuning. He has experience as Frontend Developer at Next Code Systems, Volunteer Frontend Developer at Mowblox, and Blockchain Developer at MEST Africa.";
+           break;
+         case "What are his ML skills?":
+           response = "Alex's skills include JavaScript, TypeScript, Python, React.js, Next.js, Tailwind CSS, Solidity, Smart Contracts, Git, Agile methodologies, and AI/ML development with focus on Large Language Models.";
+           break;
+         case "Tell me about FineTun-ai":
+           response = "FineTun-ai is a startup co-founded by Alex in April 2025, focused on enabling businesses to fine-tune Large Language Models (LLMs) using their proprietary datasets. He spearheaded product vision and strategy in this fast-paced startup environment.";
+           break;
+         case "What AI projects has he built?":
+           response = "Alex has built FineTun-ai Platform (AI company), Crop Disease Prediction Platform (AI/ML), Remifi (Cross-platform Remittance), Tally (Blockchain Voting DApp), AdwumaPa (Blockchain Freelance Platform), and is developing an AI-Powered Voice Assistant - all innovative applications combining blockchain and AI technologies.";
+           break;
+         case "How can I contact him?":
+           response = "You can reach Alex at njoyaalexander71@gmail.com or +233 240 027 151. He's available for remote work and AI/ML development opportunities.";
+           break;
+         default:
+           response = "I'm here to help you learn about Alex Njoya!";
+       }
+       setTerminalText(prev => prev + `AI: ${response}\n`);
+       setSelectedOption(null);
+     }, 1000);
   };
 
   return (
@@ -115,8 +102,8 @@ const Hero = () => {
         
         <div className="max-w-7xl mx-auto container-padding text-center relative z-10">
                                         {/* MacBook Terminal Effect */}
-                             <div className="mt-20 mb-12 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="bg-black rounded-lg shadow-2xl overflow-hidden border border-green-500/30 w-full max-w-5xl mx-auto">
+              <div className="mt-20 mb-12 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+               <div className="bg-black rounded-lg shadow-2xl overflow-hidden border border-green-500/30">
                  {/* Terminal Header */}
                  <div className="bg-gray-900 px-4 py-3 flex items-center justify-between border-b border-green-500/30">
                    <div className="flex items-center space-x-2">
@@ -131,10 +118,10 @@ const Hero = () => {
                    <div className="w-20"></div>
                  </div>
                  
-                                   {/* Terminal Content */}
-                  <div className="bg-black p-4 sm:p-6 h-64 sm:h-80 overflow-y-auto terminal-content w-full">
-                    <div className="font-mono text-xs sm:text-sm text-green-400 leading-relaxed text-left h-full w-full">
-                      <pre className="whitespace-pre-wrap text-left h-full overflow-y-auto w-full">{terminalText}</pre>
+                 {/* Terminal Content */}
+                 <div className="bg-black p-4 sm:p-6 h-64 sm:h-80 overflow-hidden">
+                   <div className="font-mono text-xs sm:text-sm text-green-400 leading-relaxed text-left">
+                     <pre className="whitespace-pre-wrap text-left">{terminalText}</pre>
                      {showTerminal && currentLine < terminalLines.length && (
                        <span className="animate-pulse">█</span>
                      )}
@@ -151,6 +138,7 @@ const Hero = () => {
                            variant="outline"
                            size="sm"
                            onClick={() => handleTerminalOptionClick(option)}
+                           disabled={selectedOption !== null}
                            className="text-xs h-8 bg-gray-700 border-green-500/30 text-green-400 hover:bg-gray-600 hover:text-green-300 font-mono"
                          >
                            {option}
