@@ -1,100 +1,94 @@
+/* Terminal/Developer Portfolio Design System */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Professional Portfolio Design System */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 @layer base {
   :root {
-    /* Light theme - Professional Portfolio Colors */
-    --background: 0 0% 100%;
-    --foreground: 220 13% 18%;
+    /* Terminal theme - Dark with green accents */
+    --background: 0 0% 8%;
+    --foreground: 120 100% 50%;
     
-    --card: 0 0% 100%;
-    --card-foreground: 220 13% 18%;
+    --card: 0 0% 12%;
+    --card-foreground: 120 100% 50%;
     
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 13% 18%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 120 100% 50%;
     
-    /* Professional blue accent */
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 217 91% 55%;
+    /* Terminal green accent */
+    --primary: 120 100% 50%;
+    --primary-foreground: 0 0% 8%;
+    --primary-hover: 120 100% 45%;
     
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 13% 18%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 120 100% 50%;
     
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 8.9% 46.1%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 120 100% 70%;
     
-    --accent: 217 91% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 120 100% 50%;
+    --accent-foreground: 0 0% 8%;
     
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 217 91% 60%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 120 100% 50%;
 
-    --radius: 0.5rem;
+    --radius: 0.25rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 120 100% 50%;
+    --sidebar-primary: 120 100% 50%;
+    --sidebar-primary-foreground: 0 0% 8%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 120 100% 50%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 120 100% 50%;
   }
 
   .dark {
-    /* Dark theme - Professional Portfolio Colors */
-    --background: 220 13% 9%;
-    --foreground: 220 13% 98%;
+    /* Dark terminal theme (same as light for consistency) */
+    --background: 0 0% 8%;
+    --foreground: 120 100% 50%;
     
-    --card: 220 13% 12%;
-    --card-foreground: 220 13% 98%;
+    --card: 0 0% 12%;
+    --card-foreground: 120 100% 50%;
     
-    --popover: 220 13% 12%;
-    --popover-foreground: 220 13% 98%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 120 100% 50%;
     
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 217 91% 65%;
+    --primary: 120 100% 50%;
+    --primary-foreground: 0 0% 8%;
+    --primary-hover: 120 100% 45%;
     
-    --secondary: 220 13% 15%;
-    --secondary-foreground: 220 13% 98%;
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 120 100% 50%;
     
-    --muted: 220 13% 15%;
-    --muted-foreground: 220 8.9% 66.1%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 120 100% 70%;
     
-    --accent: 217 91% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 120 100% 50%;
+    --accent-foreground: 0 0% 8%;
     
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 220 13% 18%;
-    --input: 220 13% 18%;
-    --ring: 217 91% 60%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 120 100% 50%;
+    
+    --sidebar-background: 0 0% 10%;
+    --sidebar-foreground: 120 100% 50%;
+    --sidebar-primary: 120 100% 50%;
+    --sidebar-primary-foreground: 0 0% 8%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 120 100% 50%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 120 100% 50%;
   }
 }
 
@@ -104,29 +98,90 @@
   }
 
   body {
-    @apply bg-background text-foreground font-inter;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    @apply bg-background text-foreground;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    background-color: #0a0a0a;
+    color: #00ff00;
   }
-  
+
   html {
     scroll-behavior: smooth;
   }
+
+  /* Terminal cursor blink effect */
+  .terminal-cursor::after {
+    content: '█';
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* Terminal text selection */
+  ::selection {
+    background-color: #00ff00;
+    color: #000000;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #00ff00;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #00cc00;
+  }
 }
 
-@layer components {
+@layer utilities {
   .section-padding {
-    @apply py-20 lg:py-24;
+    @apply px-4 py-16 md:px-8 lg:px-16;
   }
-  
+
   .container-padding {
-    @apply px-4 sm:px-6 lg:px-8;
+    @apply px-4 md:px-8 lg:px-16;
   }
-  
+
   .gradient-text {
-    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent;
   }
-  
+
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1;
+    @apply transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-500/20;
+  }
+
+  .terminal-text {
+    @apply font-mono text-green-400;
+  }
+
+  .terminal-bg {
+    @apply bg-black border border-green-500/30;
+  }
+
+  .terminal-header {
+    @apply bg-gray-900 border-b border-green-500/30 px-4 py-2 flex items-center justify-between;
+  }
+
+  .terminal-content {
+    @apply bg-black p-4 font-mono text-green-400 text-sm;
+  }
+
+  .terminal-button {
+    @apply bg-green-500 text-black font-mono px-4 py-2 rounded border border-green-400 hover:bg-green-400 transition-colors;
+  }
+
+  .terminal-input {
+    @apply bg-black border border-green-500/50 text-green-400 font-mono px-3 py-2 rounded focus:border-green-500 focus:outline-none;
   }
 }

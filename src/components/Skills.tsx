@@ -1,27 +1,29 @@
 import { portfolioData } from '@/data/portfolio';
+import { Code, Terminal, Zap } from 'lucide-react';
 
 const Skills = () => {
   const getLevelColor = (level: string) => {
     switch (level) {
       case 'Expert':
-        return 'bg-green-500/20 text-green-700 dark:text-green-400 border-green-500/30';
+        return 'text-green-400 border-green-500/50 bg-green-500/10';
       case 'Advanced':
-        return 'bg-blue-500/20 text-blue-700 dark:text-blue-400 border-blue-500/30';
+        return 'text-blue-400 border-blue-500/50 bg-blue-500/10';
       case 'Intermediate':
-        return 'bg-yellow-500/20 text-yellow-700 dark:text-yellow-400 border-yellow-500/30';
+        return 'text-yellow-400 border-yellow-500/50 bg-yellow-500/10';
       default:
-        return 'bg-gray-500/20 text-gray-700 dark:text-gray-400 border-gray-500/30';
+        return 'text-gray-400 border-gray-500/50 bg-gray-500/10';
     }
   };
 
   return (
-    <section id="skills" className="section-padding">
+    <section id="skills" className="section-padding bg-black">
       <div className="max-w-7xl mx-auto container-padding">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8 gradient-text">
-            Skills & Expertise
+          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-green-400 font-mono flex items-center justify-center gap-3">
+            <Code className="h-8 w-8" />
+            $ skills --list
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-green-300 max-w-2xl mx-auto font-mono">
             Here are the technologies and tools I work with to build exceptional digital experiences.
           </p>
         </div>
@@ -30,12 +32,12 @@ const Skills = () => {
           {portfolioData.skills.map((skill, index) => (
             <div
               key={index}
-              className="bg-card rounded-xl p-4 border border-border card-hover group text-center"
+              className="terminal-bg rounded-lg p-4 group text-center font-mono hover:border-green-400 transition-colors"
             >
-              <h3 className="font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+              <h3 className="font-semibold text-green-400 mb-2 group-hover:text-green-300 transition-colors">
                 {skill.name}
               </h3>
-              <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium border ${getLevelColor(skill.level)}`}>
+              <span className={`inline-block px-3 py-1 rounded border text-xs font-medium ${getLevelColor(skill.level)}`}>
                 {skill.level}
               </span>
             </div>
@@ -46,15 +48,15 @@ const Skills = () => {
         <div className="flex flex-wrap justify-center gap-4 mt-12">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-            <span className="text-sm text-muted-foreground">Expert</span>
+            <span className="text-sm text-green-300 font-mono">Expert</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-            <span className="text-sm text-muted-foreground">Advanced</span>
+            <span className="text-sm text-blue-300 font-mono">Advanced</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <span className="text-sm text-muted-foreground">Intermediate</span>
+            <span className="text-sm text-yellow-300 font-mono">Intermediate</span>
           </div>
         </div>
       </div>

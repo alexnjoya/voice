@@ -1,31 +1,23 @@
 import { useState, useEffect } from 'react';
-import { Moon, Sun, Menu, X } from 'lucide-react';
+import { Moon, Sun, Menu, X, Terminal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Navbar = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true); // Default to dark/terminal mode
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Check for saved theme preference or default to light mode
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      setDarkMode(true);
-      document.documentElement.classList.add('dark');
-    }
+    // Always use dark/terminal mode
+    setDarkMode(true);
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
   }, []);
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    if (!darkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
+    // Keep terminal mode always on
+    setDarkMode(true);
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -37,20 +29,21 @@ const Navbar = () => {
   };
 
   const navItems = [
-    { name: 'Home', id: 'hero' },
-    { name: 'About', id: 'about' },
-    { name: 'Skills', id: 'skills' },
-    { name: 'Projects', id: 'projects' },
-    { name: 'Contact', id: 'contact' }
+    { name: 'HOME', id: 'hero' },
+    { name: 'ABOUT', id: 'about' },
+    { name: 'SKILLS', id: 'skills' },
+    { name: 'PROJECTS', id: 'projects' },
+    { name: 'CONTACT', id: 'contact' }
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-green-500/30 font-mono">
       <div className="max-w-7xl mx-auto container-padding">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="font-bold text-xl gradient-text cursor-pointer" onClick={() => scrollToSection('hero')}>
-            Alex Njoya
+          <div className="font-bold text-xl text-green-400 cursor-pointer flex items-center gap-2" onClick={() => scrollToSection('hero')}>
+            <Terminal className="h-6 w-6" />
+            <span className="terminal-cursor">alex@njoya:~$</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -59,9 +52,9 @@ const Navbar = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+                className="text-green-400 hover:text-green-300 transition-colors duration-200 font-mono text-sm"
               >
-                {item.name}
+                ./{item.name.toLowerCase()}
               </button>
             ))}
             
@@ -69,9 +62,9 @@ const Navbar = () => {
               variant="ghost"
               size="sm"
               onClick={toggleDarkMode}
-              className="p-2"
+              className="p-2 text-green-400 hover:text-green-300"
             >
-              {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              <Terminal className="h-5 w-5" />
             </Button>
           </div>
 
@@ -81,16 +74,16 @@ const Navbar = () => {
               variant="ghost"
               size="sm"
               onClick={toggleDarkMode}
-              className="p-2"
+              className="p-2 text-green-400 hover:text-green-300"
             >
-              {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              <Terminal className="h-5 w-5" />
             </Button>
             
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2"
+              className="p-2 text-green-400 hover:text-green-300"
             >
               {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
@@ -100,14 +93,14 @@ const Navbar = () => {
         {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-background border-t border-border">
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-black border-t border-green-500/30">
               {navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className="block w-full text-left px-3 py-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  className="block w-full text-left px-3 py-2 text-green-400 hover:text-green-300 transition-colors duration-200 font-mono text-sm"
                 >
-                  {item.name}
+                  ./{item.name.toLowerCase()}
                 </button>
               ))}
             </div>
