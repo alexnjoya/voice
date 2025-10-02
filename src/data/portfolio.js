@@ -31,13 +31,14 @@ export const portfolioData = {
   projects: [
     {
       id: 1,
-      title: "FineTun-ai Platform",
-      description: "Co-founded and led the development of a no-code platform enabling businesses to fine-tune Large Language Models (LLMs) using their proprietary datasets. Spearheaded product vision and strategy in a fast-paced startup environment.",
+      title: "Remifi",
+      description: "Cross-platform remittance solution for stable coins, enabling secure and fast international money transfers using blockchain technology. Built with modern web technologies and deployed on Vercel.",
       tech: ["React.js", "Python", "LLMs", "AI/ML", "No-code Platform"],
-      link: "https://github.com/alexnjoya/finetun-ai",
-      demo: "https://finetun-ai.com",
+      link: "https://github.com/alexnjoya/remifi-client.git",
+      demo: "https://remifi-client.vercel.app",
       status: "Live"
     },
+
     {
       id: 2,
       title: "Crop Disease Prediction Platform",
@@ -47,15 +48,17 @@ export const portfolioData = {
       demo: "https://client-blockdevrel.vercel.app/",
       status: "Live"
     },
+
     {
       id: 3,
-      title: "Remifi - Cross-Platform Remittance",
+      title: "Gasaid",
       description: "Cross-platform remittance solution for stable coins, enabling secure and fast international money transfers using blockchain technology. Built with modern web technologies and deployed on Vercel.",
       tech: ["React.js", "Blockchain", "Stable Coins", "Web3", "Vercel"],
-      link: "https://github.com/alexnjoya/remifi-remittance",
-      demo: "https://remifi.xyz/",
+      link: "https://github.com/alexnjoya/gasaid.git",
+      demo: "https://gasaid.vercel.app",
       status: "Live"
     },
+
     {
       id: 4,
       title: "Tally - Blockchain Voting DApp",
@@ -65,13 +68,14 @@ export const portfolioData = {
       demo: "https://tally-client-phi.vercel.app/",
       status: "Live"
     },
+
     {
       id: 5,
       title: "AdwumaPa - Blockchain Freelance Platform",
       description: "A Web3 platform helping remote workers get paid securely through crypto. Tackled cross-border payment issues with smart contracts and blockchain technology.",
       tech: ["Solidity", "React.js", "Ethereum", "Crypto Payments", "Web3"],
       link: "https://github.com/alexnjoya/adwumapa-platform",
-      demo: "https://adwumapa-platform.vercel.app",
+      demo: "https://blockgigs-nextjs-two.vercel.app/",
       status: "Live"
     },
     {
