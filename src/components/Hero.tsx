@@ -67,8 +67,8 @@ const Hero = () => {
      setTimeout(() => {
        let response = '';
        switch (option) {
-         case "Tell me about Alex":
-           response = "Alex Njoya is a final-year Computer Science student at University of Ghana with strong experience in software development, frontend engineering, and AI application development. He's the Co-Founder of FineTun-ai, a platform enabling businesses to fine-tune Large Language Models (LLMs) using their proprietary datasets.";
+        case "Tell me about Alex":
+          response = "Alex Njoya is a Computer Science graduate from the University of Ghana with strong experience in software development, frontend engineering, and AI application development. He's the Co-Founder of FineTun-ai, a platform enabling businesses to fine-tune Large Language Models (LLMs) using their proprietary datasets.";
            break;
          case "What's his AI experience?":
            response = "Alex co-founded FineTun-ai in April 2025, leading the development of a no-code platform for LLM fine-tuning. He has experience as Frontend Developer at Next Code Systems, Volunteer Frontend Developer at Mowblox, and Blockchain Developer at MEST Africa.";
